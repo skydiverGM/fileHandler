@@ -1,30 +1,31 @@
 package com.imaks;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class FileHandler {
 
     private final static String BASE_PATH = "files/";
 
-    public String writeFile(String fileContent) {
-        try(FileWriter fw = fileName + ".txt") {
-            fw(fileContent);
+    public String writeFile(String fileName, String fileContent) {
+        try(BufferedWriter fw = new BufferedWriter(new FileWriter(BASE_PATH + fileName + ".txt"))) {
+
+            fw.write(fileContent);
+            fw.flush(); //is it required? because close() will be called as we have try(fw), however, the close() throws an exception and data from buffer may be lost???
             return "Success.";
-        } catch (Exception e) {
-            return
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public String readFile(String path) {
-        try (FileReader reader = new FileReader()) {
+        try (FileReader reader = new FileReader(path)) {
             int sym;
-            new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             while ((sym = reader.read()) != -1) {
-                stringBuilder.append((char) sym);
+                sb.append((char) sym);
             }
-            return
+            return sb.toString();
         } catch (IOException ex) {
             return ex.getMessage();
         }
