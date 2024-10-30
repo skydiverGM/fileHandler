@@ -1,17 +1,20 @@
 package com.imaks;
 
+import java.nio.file.Paths;
+
 public class Main {
 
-    private final static String BASE_PATH = "files/";
+    private static final String BASE_PATH = "files/";
 
     public static void main(String[] args) {
         FileHandler handler = new FileHandler();
-        String fileName = "myfile";
-        String fileContent = "My very important information.";
-        String result = handler.writeFile(fileName, fileContent);
-        String content = handler.readFile(BASE_PATH + fileName + ".txt");
-        getOutput("RESULT: " + result);
-        getOutput("FILE CONTENT: " + content);
+        String newFileName = "myfile";
+        String content = "Super information.";
+        String path = BASE_PATH + newFileName + ".txt";
+        // Виклики методів маніпуляції з файлом
+        getOutput(handler.createFile(path));
+        getOutput(handler.writeToFile(Paths.get(path), content));
+        getOutput("CONTENT: " + handler.readFromFile(path));
     }
 
     private static void getOutput(String output) {
